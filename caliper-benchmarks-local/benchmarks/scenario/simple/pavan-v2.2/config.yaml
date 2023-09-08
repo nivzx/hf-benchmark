@@ -1,0 +1,38 @@
+test:
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: Write Level
+      description: Writes/updates level to the blockchain
+      txNumber: 10000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 250
+      workload:
+        module: benchmarks/scenario/simple/pavan-v2.2/createCar.js
+    - label: Read level
+      description: Reads the signal level of a location
+      txNumber: 10000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 250
+      workload:
+        module: benchmarks/scenario/simple/pavan-v2.2/queryCar.js
+    # - label: Get High Locations
+    #   description: Queries locations with high signal levels
+    #   txNumber: 1000
+    #   rateControl:
+    #     type: fixed-rate
+    #     opts:
+    #       tps: 220
+    #   workload:
+    #     module: benchmarks/scenario/simple/pavan-v2.2/highLocation.js
+monitor:
+  type:
+  - docker
+  docker:
+    containers:
+    - all
